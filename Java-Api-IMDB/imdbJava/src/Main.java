@@ -1,4 +1,6 @@
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
@@ -15,7 +17,7 @@ public class Main {
     public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
 
         //Token retirado do site
-        String token = "Seu token";
+        String token = "sua chave";
 
         //Url da api, também retirado do site
         String url = "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video" +
@@ -40,10 +42,24 @@ public class Main {
         //System.out.println(json);
 
         //Extrair o valor de "original_title", "poster_path", "release_date" e "vote_average"
-
         ArrayList<Movie> filmes = ParseadorJson.ArrayDeFilmes(json);
         System.out.println(filmes);
 
+
+
+        //Criando um arquivo index.html
+
+        HTMLGenerator html = new HTMLGenerator("index.html");
+        html.docHTMLHeaderBegin();
+        for(int i = 0; i < filmes.size(); i++){
+            html.contentHtml(String.format("<h3 class=\"titulo\">%s</h3>\n",filmes.get(i).getTitulo()));
+            html.contentHtml(String.format("<img class=\"imagem\" src=\"https://image.tmdb.org/t/p/w600_and_h900_bestv2/%s\"></img>\n",
+                    filmes.get(i).getUrlPoster()));
+            html.contentHtml(String.format("<p class=\"notaFilme\">Nota do filme: %s</p>\n",filmes.get(i).getNota()));
+            html.contentHtml(String.format("<p class=\"dataFilme\">Data de lançamento: %s</p>\n",filmes.get(i).getDataLancamento()));
+        }
+        html.docHTMLHeaderEnd();
+        html.closeHtml();
     }
 
 
