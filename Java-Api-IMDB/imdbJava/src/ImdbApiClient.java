@@ -16,18 +16,21 @@ public class ImdbApiClient {
     private HttpRequest request;
     private HttpResponse<String> response;
     private String json;
-    private  ArrayList<Movie> filmes;
+
 
     public ImdbApiClient(String token, String apiUrl) throws URISyntaxException, IOException, InterruptedException {
+
         //Criando o cliente
         this.apiUrl = apiUrl;
         this.client = HttpClient.newBuilder().build();
+
         //Criando o request
         this.request =  newBuilder()
                 .uri(new URI(this.apiUrl))
                 .header("Authorization", "Bearer " + token)
                 .GET()
                 .build();
+
         //Criando a response
         this.response = client.send(request, HttpResponse.BodyHandlers.ofString());
         this.json = this.response.body();
@@ -36,11 +39,4 @@ public class ImdbApiClient {
     public String getJson() {
         return json;
     }
-
-    public ArrayList<Movie> getArrayFilmes(){
-        //Extrair o valor de "original_title", "poster_path", "release_date" e "vote_average"
-        this.filmes = ParseadorJson.ArrayDeFilmes(json);
-        return filmes;
-    }
-
 }

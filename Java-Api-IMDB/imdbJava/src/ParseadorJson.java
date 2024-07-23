@@ -4,6 +4,9 @@ import java.util.regex.Pattern;
 
 public class ParseadorJson {
 
+    private static ArrayList<Movie> filmes;
+
+    //Retorna valores inteiros do json. Exemplo "Original_title":"nome do filme"
     public static ArrayList<String> parseJson(Pattern padrao, String json){
         Matcher matcher = padrao.matcher(json);
         ArrayList<String> valoresProcurados = new ArrayList<>();
@@ -13,27 +16,32 @@ public class ParseadorJson {
         return valoresProcurados;
     }
 
-    public static ArrayList<String> parseValor(ArrayList<String> arrayTitulosOrPoster, String nomeValor){
+    public static ArrayList<String> parseValor(ArrayList<String> arrayValoresDoTitulo){
         ArrayList<String> nomesFilmes = new ArrayList<>();
-
+        //"title":"dead pool"
         //Busca o inicio da string
-        int inicioString = nomeValor.length();
 
-        for(String i : arrayTitulosOrPoster){
+
+        for(String i : arrayValoresDoTitulo){
+            int inicioString = i.indexOf(":")+2;
             int finalString =  i.length()-1;
-            if(nomeValor.contains("vote_average")){
+
+            if(i.contains("vote_average")){
+                inicioString = i.indexOf(":")+1;
                 finalString = i.length();
             }
+
             String nome = i.substring(inicioString, finalString);
             nomesFilmes.add(nome);
         }
+
         return nomesFilmes;
     }
 
     public static ArrayList<Movie> ArrayDeFilmes (String json){
         ArrayList <Movie> arrayDeMovies = new ArrayList<>();
 
-        Pattern padraoTituloFilme = Pattern.compile("\"original_title\":\"(.*?)\"");
+        Pattern padraoTituloFilme = Pattern.compile("\"title\":\"(.*?)\"");
         Pattern padraoPosterFilme = Pattern.compile("\"poster_path\":\"(/.*?)\"");
         Pattern padraoNotaFilme = Pattern.compile("\"vote_average\":[0-9].[0-9]");
         Pattern padraoAnoLancamentoFilme = Pattern.compile("\"release_date\":\"[0-9][0-9][0-9][0-9]" +
@@ -41,32 +49,43 @@ public class ParseadorJson {
 
 
         ArrayList<String> listaFilmes = parseJson(padraoTituloFilme,json);
-        ArrayList<String> listaFilmesNomes = parseValor(listaFilmes, "\"original_title\":\"");
-        //System.out.println(listaFilmesNomes);
+        System.out.println(listaFilmes);
+        ArrayList<String> listaFilmesNomes = parseValor(listaFilmes);
+        System.out.println(listaFilmesNomes);
 
         ArrayList<String> listaPoster = parseJson(padraoPosterFilme,json);
-        ArrayList<String> listaPosterNome = parseValor(listaPoster, "\"poster_path\":\"/");
-        //System.out.println(listaPosterNome);
+        System.out.println(listaPoster);
+        ArrayList<String> listaPosterNome = parseValor(listaPoster);
+        System.out.println(listaPosterNome);
 
         ArrayList<String> listaNota = parseJson(padraoNotaFilme,json);
-        ArrayList<String> listaFilmeNota = parseValor(listaNota, "\"vote_average\":");
-        //System.out.println(listaFilmeNota);
+        System.out.println(listaNota);
+        ArrayList<String> listaFilmeNota = parseValor(listaNota);
+        System.out.println(listaFilmeNota);
 
         ArrayList<String> listaLancamento = parseJson(padraoAnoLancamentoFilme,json);
-        ArrayList<String> listaLancamentoData = parseValor(listaLancamento, "\"release_date\":\"");
-        //System.out.println(listaLancamentoData);
+        System.out.println(listaLancamento);
+        ArrayList<String> listaLancamentoData = parseValor(listaLancamento);
+        System.out.println(listaLancamentoData);
 
         for(int i = 0; i < listaFilmes.size(); i++){
-            Movie filme = new Movie();
-            filme.setTitulo(listaFilmesNomes.get(i));
-            filme.setUrlPoster(listaPosterNome.get(i));
-            filme.setNota(Double.parseDouble(listaFilmeNota.get(i)));
-            filme.setDataLancamento(listaLancamentoData.get(i));
-
-            arrayDeMovies.add(filme);
+            try {
+                Movie filme = new Movie();
+                filme.setTitulo(listaFilmesNomes.get(i));
+                filme.setUrlPoster(listaPosterNome.get(i));
+                filme.setNota(Double.parseDouble(listaFilmeNota.get(i)));
+                filme.setDataLancamento(listaLancamentoData.get(i));
+                arrayDeMovies.add(filme);
+            } catch (Exception e){
+                System.out.println(e);
+            }
         }
-
         return arrayDeMovies;
+    }
 
+    public static ArrayList<Movie> getArrayFilmes(String json){
+        //Extrair o valor de "original_title", "poster_path", "release_date" e "vote_average"
+        filmes = ParseadorJson.ArrayDeFilmes(json);
+        return filmes;
     }
 }
