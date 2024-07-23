@@ -1,45 +1,63 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 public class HTMLGenerator {
-    private File file;
-    private PrintWriter caneta;
+    private File a;
+    private static PrintWriter writer;
 
     public HTMLGenerator(String nomeArquivo) throws FileNotFoundException {
         String nome = "./".concat(nomeArquivo);
-        file = new File(nome);
-        this.caneta = new PrintWriter(this.file);
+        this.a = new File(nome);
+        this.writer = new PrintWriter(this.a);
     }
 
-    public void docHTMLHeaderBegin() {
+    public static void writeBegin() {
         String docHTML ="<!DOCTYPE html>\n" +
                 "<html lang=\"en\">\n" +
                 "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-                "    <title>Document</title>\n" +
-                " <link rel=\"stylesheet\" href=\"/style.css\">\n" +
+                "<meta charset=\"UTF-8\">\n" +
+                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                "<title>Document</title>\n" +
+                "<link rel=\"stylesheet\" href=\"/style.css\">\n" +
                 "</head>\n" +
-                "<body>";
-
-        caneta.write(docHTML);
+                "<body>" +
+                "<h1 class=\"mainTitle\">Top Rated movies</h1>" +
+                "\n<main class=\"containerMain\">";
+        writer.write(docHTML);
     }
 
-    public void contentHtml(String content){
-        caneta.write(content);
+    public static void contentHtml(String content){
+        writer.write(content);
     }
 
-    public void docHTMLHeaderEnd() {
-        String docHTML = "</body>\n" +
+    public static void writeEnd() {
+        String docHTML = "</main>\n</body>\n" +
                 "</html>";
-        caneta.write(docHTML);
+        writer.write(docHTML);
     }
 
-    public void closeHtml(){
-        caneta.close();
+
+    public static void closeHtml(){
+        writer.close();
     }
 
+    public void writeBody(ArrayList<Movie> listaFilmes) throws FileNotFoundException {
+        HTMLGenerator.writeBegin();
+        for(int i = 0; i < listaFilmes.size(); i++){
+            HTMLGenerator.contentHtml(String.format("""
+                    <div class="filme">
+                        <h3 class="titulo_filme">%s</h3>
+                        <img class="imagem" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/%s"></img>
+                        Nota do filme: %s <br>
+                        Data de lançamento: %s
+                    </div>
+                    """,listaFilmes.get(i).getTitulo(), listaFilmes.get(i).getUrlPoster(),listaFilmes.get(i).getNota(),listaFilmes.get(i).getDataLancamento()));
+        }
+        HTMLGenerator.writeEnd();
+        HTMLGenerator.closeHtml();
+    }
 
 
 
