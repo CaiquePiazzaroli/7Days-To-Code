@@ -3,7 +3,7 @@ import com.imdb.interfaces.Content;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Titulo implements Content {
+public class Titulo implements Content, Comparable<Titulo> {
 
     private String titulo;
     private String urlPoster;
@@ -72,5 +72,16 @@ public class Titulo implements Content {
                 ", dataLancamento='" + dataLancamento + '\'' +
                 ", padroesDeBusca=" + padroesDeBusca +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Titulo t) {
+        if(this.getNota() < t.getNota()){
+            return -1;
+        }
+        if(this.getNota() > t.getNota()){
+            return 1;
+        }
+         return 0;
     }
 }

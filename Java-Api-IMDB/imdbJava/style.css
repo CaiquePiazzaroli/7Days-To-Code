@@ -47,3 +47,68 @@ div {
     font-weight: 300;
     font-style: italic;
 }
+
+
+
+@media screen and (max-width: 1490px) {
+
+    .containerMain{
+        justify-content: center;
+    }
+
+   .filme {
+        width: 20%;
+        margin: 1.2em 1.2em 1.2em 1.2em;
+        padding: 0;
+   }
+
+   div {
+    font-size: 30px;
+   }
+
+   .titulo_filme{
+    font-size: 1.2em;
+   }
+}
+
+@media screen and (max-width: 1160px) {
+
+    .containerMain{
+        justify-content: center;
+    }
+
+   .filme {
+        width: 30%;
+        margin: 1.2em 1.2em 1.2em 1.2em;
+        padding: 0;
+   }
+
+   div {
+    font-size: 30px;
+   }
+
+   .titulo_filme{
+    font-size: 1.2em;
+   }
+}
+
+@media screen and (max-width: 790px) {
+
+    .containerMain{
+        justify-content: center;
+    }
+
+   .filme {
+        width: 80%;
+        margin: 1.2em 1.2em 1.2em 1.2em;
+        padding: 0;
+   }
+
+   div {
+    font-size: 30px;
+   }
+
+   .titulo_filme{
+    font-size: 1.2em;
+   }
+}

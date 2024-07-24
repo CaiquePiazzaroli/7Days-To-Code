@@ -13,30 +13,34 @@ public class ParseadorJson {
         Matcher matcher = padrao.matcher(json);
         ArrayList<String> valoresProcurados = new ArrayList<>();
         while (matcher.find()) {
-            valoresProcurados.add(matcher.group());
+            //Retorna os valores dentro dos parenteses.
+            valoresProcurados.add(matcher.group(1));
+
+            //Obs matcher.group(0) retornaria toda a string
+            //System.out.println(matcher.group(0));
         }
         return valoresProcurados;
     }
 
-    public static ArrayList<String> parseValor(ArrayList<String> arrayValoresDoTitulo){
-        ArrayList<String> nomesTitulos = new ArrayList<>();
-        //"title":"dead pool"
-        //Busca o inicio da string
-        for(String i : arrayValoresDoTitulo){
-            int inicioString = i.indexOf(":")+2;
-            int finalString =  i.length()-1;
-
-            if(i.contains("vote_average")){
-                inicioString = i.indexOf(":")+1;
-                finalString = i.length();
-            }
-
-            String nome = i.substring(inicioString, finalString);
-            nomesTitulos.add(nome);
-        }
-
-        return nomesTitulos;
-    }
+//    public static ArrayList<String> parseValor(ArrayList<String> arrayValoresDoTitulo){
+//        ArrayList<String> nomesTitulos = new ArrayList<>();
+//        //"title":"dead pool"
+//        //Busca o inicio da string
+//        for(String i : arrayValoresDoTitulo){
+//            int inicioString = i.indexOf(":")+2;
+//            int finalString =  i.length()-1;
+//
+//            if(i.contains("vote_average")){
+//                inicioString = i.indexOf(":")+1;
+//                finalString = i.length();
+//            }
+//
+//            String nome = i.substring(inicioString, finalString);
+//            nomesTitulos.add(nome);
+//        }
+//
+//        return nomesTitulos;
+//    }
 
     public static Titulo verificarInstancia(String json){
         Titulo titulo = new Movie();
@@ -59,27 +63,20 @@ public class ParseadorJson {
         Pattern padraoNota = Pattern.compile(titulo.rating());
         Pattern padraoAnoLancamento = Pattern.compile(titulo.year());
 
-        ArrayList<String> listaFilmes = parseJson(padraoTitle,json);
-        //System.out.println(listaFilmes);
-        ArrayList<String> listaFilmesNomes = parseValor(listaFilmes);
-        //System.out.println(listaFilmesNomes);
+        ArrayList<String> listaFilmesNomes = parseJson(padraoTitle,json);
+        System.out.println(listaFilmesNomes);
 
-        ArrayList<String> listaPoster = parseJson(padraoPoster,json);
-        //System.out.println(listaPoster);
-        ArrayList<String> listaPosterNome = parseValor(listaPoster);
-        //System.out.println(listaPosterNome);
+        ArrayList<String> listaPosterNome = parseJson(padraoPoster,json);
+        System.out.println(listaPosterNome);
 
-        ArrayList<String> listaNota = parseJson(padraoNota,json);
-        //System.out.println(listaNota);
-        ArrayList<String> listaFilmeNota = parseValor(listaNota);
-        //System.out.println(listaFilmeNota);
+        ArrayList<String> listaFilmeNota = parseJson(padraoNota,json);
+        System.out.println(listaFilmeNota);
 
-        ArrayList<String> listaLancamento = parseJson(padraoAnoLancamento,json);
-        //System.out.println(listaLancamento);
-        ArrayList<String> listaLancamentoData = parseValor(listaLancamento);
-        //System.out.println(listaLancamentoData);
 
-        for(int i = 0; i < listaFilmes.size(); i++){
+        ArrayList<String> listaLancamentoData = parseJson(padraoAnoLancamento,json);
+        System.out.println(listaLancamentoData);
+
+        for(int i = 0; i < listaFilmesNomes.size(); i++){
             try {
                 titulo.setTitulo(listaFilmesNomes.get(i));
                 titulo.setUrlPoster(listaPosterNome.get(i));

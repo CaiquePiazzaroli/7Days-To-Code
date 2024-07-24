@@ -45,18 +45,37 @@ public class HTMLGenerator {
         writer.close();
     }
 
-    public void writeBody(ArrayList<Titulo> listaFilmes) throws FileNotFoundException {
+    public void writeBody(ArrayList<Titulo> listaFilmes, String ascOrDes) throws FileNotFoundException {
         HTMLGenerator.writeBegin();
-        for(int i = 0; i < listaFilmes.size(); i++){
-            HTMLGenerator.contentHtml(String.format("""
+
+        //for ascending order
+        if(ascOrDes.equals("asc")){
+            for(int i = 0; i < listaFilmes.size(); i++){
+                HTMLGenerator.contentHtml(String.format("""
                     <div class="filme">
                         <h3 class="titulo_filme">%s</h3>
                         <img class="imagem" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/%s"></img>
                         Nota: %s <br>
                         Data de lançamento: %s
                     </div>
-                    """,listaFilmes.get(i).getTitulo(), listaFilmes.get(i).getUrlPoster(),listaFilmes.get(i).getNota(),listaFilmes.get(i).getDataLancamento()));
+                    """,listaFilmes.get(i).getTitulo().replace("\\u0026", "&"), listaFilmes.get(i).getUrlPoster(),listaFilmes.get(i).getNota(),listaFilmes.get(i).getDataLancamento()));
+            }
         }
+
+        //for when the title is being sorted by descending order
+        if(ascOrDes.equals("des")){
+            for(int i = listaFilmes.size()-1; i > -1; i--){
+                HTMLGenerator.contentHtml(String.format("""
+                    <div class="filme">
+                        <h3 class="titulo_filme">%s</h3>
+                        <img class="imagem" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/%s"></img>
+                        Nota: %s <br>
+                        Data de lançamento: %s
+                    </div>
+                    """,listaFilmes.get(i).getTitulo().replace("\\u0026", "&"), listaFilmes.get(i).getUrlPoster(),listaFilmes.get(i).getNota(),listaFilmes.get(i).getDataLancamento()));
+            }
+        }
+
         HTMLGenerator.writeEnd();
         HTMLGenerator.closeHtml();
     }
