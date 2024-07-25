@@ -18,7 +18,7 @@ public class ImdbApiClient {
     private HttpResponse<String> response;
     private String json;
 
-
+    //TBDB api connection
     public ImdbApiClient(String token, String apiUrl) throws URISyntaxException, IOException, InterruptedException {
 
         //Criando o cliente
@@ -33,6 +33,27 @@ public class ImdbApiClient {
                 .build();
 
         //Criando a response
+        this.response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        this.json = this.response.body();
+    }
+
+    // Marvel api connection
+    public ImdbApiClient(String apikey, String privateApiKey, String timeStamp, String url) throws URISyntaxException, IOException, InterruptedException {
+
+        //The hash to authenticate
+        String hashCode = HashMd5.getMd5(timeStamp + privateApiKey +  apikey);
+
+        //Making the url request
+        this.apiUrl = url.concat(
+                String.format("&ts=%s&apikey=%s&hash=%s",timeStamp,apikey, hashCode)
+        );
+
+        this.client = HttpClient.newBuilder().build();
+        this.request =  newBuilder()
+                .uri(new URI(this.apiUrl))
+                .GET()
+                .build();
+
         this.response = client.send(request, HttpResponse.BodyHandlers.ofString());
         this.json = this.response.body();
     }

@@ -1,8 +1,5 @@
 package com.imdb.main;
-import com.imdb.models.HTMLGenerator;
-import com.imdb.models.ImdbApiClient;
-import com.imdb.models.ParseadorJson;
-import com.imdb.models.Titulo;
+import com.imdb.models.*;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -16,7 +13,7 @@ public class Main {
     public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
 
         //Token retirado do site
-        String token = "yourKey";
+        String token = "<Your_token>";
 
         //Url da api, também retirado do site
         String url = "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
@@ -24,7 +21,15 @@ public class Main {
         //Chamando a api
         ImdbApiClient imdb = new ImdbApiClient(token,url);
 
+        //Conecting to marvel API
+//        String publicApiKey = "<public_key>";
+//        String privateApiKey = "<private_key>";
+//        String url = "https://gateway.marvel.com:443/v1/public/comics?limit=10";
+//        String timeStamp = "1";
+//        ImdbApiClient imdb = new ImdbApiClient(publicApiKey,privateApiKey,timeStamp, url);
+
         //Recebendo o array de Titulos
+
         ArrayList<Titulo> listaTitulos = ParseadorJson.getArrayFilmes(imdb.getJson());
 
         //Criando o html e escrevendo no html
