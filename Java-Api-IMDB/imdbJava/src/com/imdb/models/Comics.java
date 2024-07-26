@@ -1,6 +1,8 @@
 package com.imdb.models;
 
-public class Comics extends Titulo{
+import com.imdb.superclass.Titulo;
+
+public class Comics extends Titulo {
 
     public Comics(){
         padroesDeBusca.add("1:");

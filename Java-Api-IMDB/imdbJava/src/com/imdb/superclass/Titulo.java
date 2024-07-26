@@ -1,4 +1,4 @@
-package com.imdb.models;
+package com.imdb.superclass;
 import com.imdb.interfaces.Content;
 import java.util.ArrayList;
 import java.util.List;

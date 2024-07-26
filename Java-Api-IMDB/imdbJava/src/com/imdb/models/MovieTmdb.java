@@ -1,8 +1,10 @@
 package com.imdb.models;
 
-public class Movie extends Titulo {
+import com.imdb.superclass.Titulo;
 
-    public Movie(){
+public class MovieTmdb extends Titulo {
+
+    public MovieTmdb(){
         padroesDeBusca.add("\"original_title\":\"(.*?)\"");
         padroesDeBusca.add("\"poster_path\":\"(/.*?)\"");
         padroesDeBusca.add("\"vote_average\":([0-9].[0-9])");

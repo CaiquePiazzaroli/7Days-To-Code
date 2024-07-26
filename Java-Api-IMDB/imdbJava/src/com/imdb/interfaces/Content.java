@@ -1,6 +1,6 @@
 package com.imdb.interfaces;
 
-import com.imdb.models.Titulo;
+import com.imdb.superclass.Titulo;
 
 public interface Content {
     String title();

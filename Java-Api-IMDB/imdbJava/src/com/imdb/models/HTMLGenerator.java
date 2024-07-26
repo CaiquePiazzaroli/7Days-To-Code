@@ -1,5 +1,7 @@
 package com.imdb.models;
 
+import com.imdb.superclass.Titulo;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -46,8 +48,8 @@ public class HTMLGenerator {
     }
 
     public void writeBody(ArrayList<Titulo> listaFilmes, String ascOrDes) throws FileNotFoundException {
-        HTMLGenerator.writeBegin();
 
+        HTMLGenerator.writeBegin();
         //for ascending order
         if(ascOrDes.equals("asc")){
             for(int i = 0; i < listaFilmes.size(); i++){
