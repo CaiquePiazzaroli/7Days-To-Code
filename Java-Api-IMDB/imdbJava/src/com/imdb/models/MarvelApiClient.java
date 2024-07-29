@@ -30,7 +30,7 @@ public class MarvelApiClient implements ApiClient {
         this.apiUrl = url.concat(
                 String.format("&ts=%s&apikey=%s&hash=%s",timeStamp,apikey, hashCode)
         );
-
+        System.out.println(this.apiUrl);
         this.client = HttpClient.newBuilder().build();
         this.request =  newBuilder()
                 .uri(new URI(this.apiUrl))

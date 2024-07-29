@@ -18,17 +18,20 @@ public class HTMLGenerator {
     }
 
     public static void writeBegin() {
-        String docHTML ="<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "<meta charset=\"UTF-8\">\n" +
-                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-                "<title>Document</title>\n" +
-                "<link rel=\"stylesheet\" href=\"/style.css\">\n" +
-                "</head>\n" +
-                "<body>" +
-                "<h1 class=\"mainTitle\">Top Rated movies</h1>" +
-                "\n<main class=\"containerMain\">";
+        String docHTML =
+                """
+                <!DOCTYPE html>
+                <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Document</title>
+                        <link rel="stylesheet" href="/style.css">
+                    </head>
+                    <body>
+                        <h1 class="mainTitle">Top Rated movies</h1>
+                        <main class="containerMain">
+                """;
         writer.write(docHTML);
     }
 
@@ -37,8 +40,11 @@ public class HTMLGenerator {
     }
 
     public static void writeEnd() {
-        String docHTML = "</main>\n</body>\n" +
-                "</html>";
+        String docHTML = """
+                      </main>
+                    </body>
+                </html>
+                """;
         writer.write(docHTML);
     }
 
@@ -53,10 +59,11 @@ public class HTMLGenerator {
         //for ascending order
         if(ascOrDes.equals("asc")){
             for(int i = 0; i < listaFilmes.size(); i++){
-                HTMLGenerator.contentHtml(String.format("""
+                HTMLGenerator.contentHtml(String.format(
+                    """
                     <div class="filme">
                         <h3 class="titulo_filme">%s</h3>
-                        <img class="imagem" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/%s"></img>
+                        <img class="imagem" src="%s"></img>
                         Nota: %s <br>
                         Data de lançamento: %s
                     </div>
@@ -70,7 +77,7 @@ public class HTMLGenerator {
                 HTMLGenerator.contentHtml(String.format("""
                     <div class="filme">
                         <h3 class="titulo_filme">%s</h3>
-                        <img class="imagem" src="https://image.tmdb.org/t/p/w600_and_h900_bestv2/%s"></img>
+                        <img class="imagem" src="%s"></img>
                         Nota: %s <br>
                         Data de lançamento: %s
                     </div>

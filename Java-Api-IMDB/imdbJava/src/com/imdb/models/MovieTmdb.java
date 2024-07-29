@@ -3,7 +3,6 @@ package com.imdb.models;
 import com.imdb.superclass.Titulo;
 
 public class MovieTmdb extends Titulo {
-
     public MovieTmdb(){
         padroesDeBusca.add("\"original_title\":\"(.*?)\"");
         padroesDeBusca.add("\"poster_path\":\"(/.*?)\"");

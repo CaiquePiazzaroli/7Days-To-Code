@@ -1,27 +1,21 @@
-package com.imdb.superclass;
+package com.imdb.models;
 
-import com.imdb.interfaces.Parseable;
+import com.imdb.superclass.Parser;
+import com.imdb.superclass.Titulo;
 
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Parser implements Parseable {
+public class ParserComicsMarvel extends Parser {
 
-    private ArrayList<Titulo> titulos = new ArrayList<>();
-    protected String json;
-    protected Titulo title;
-
-    //Return array titles
-    @Override
-    public ArrayList<Titulo> getArrayTitles(){
-        //Extrair o valor de "original_title", "poster_path", "release_date" e "vote_average"
-        titulos = ArrayDeTitles();
-        return titulos;
+    public ParserComicsMarvel(String json){
+        super.json = json;
+        super.title = new com.imdb.models.ComicsMarvel();
     }
 
-    public ArrayList<Titulo> ArrayDeTitles(){
-
+    @Override
+    public ArrayList<Titulo> ArrayDeTitles() {
         ArrayList <Titulo> arrayDeTitulos = new ArrayList<>();
 
         Pattern padraoTitle = Pattern.compile(this.title.title());
@@ -44,28 +38,38 @@ public class Parser implements Parseable {
             try {
                 this.title.setTitulo(listTitlesName.get(i));
                 this.title.setUrlPoster(listPosterName.get(i));
-                this.title.setNota(Double.parseDouble(listTitleAverage.get(i)));
+
+                //Verificando se a list está vazia
+                if(listTitleAverage.isEmpty()){
+                    this.title.setNota(0.00);
+                }else {
+                    this.title.setNota(Double.parseDouble(listTitleAverage.get(i)));
+                }
+
                 this.title.setDataLancamento(listaTitleDate.get(i));
                 arrayDeTitulos.add(this.title);
                 this.title = new Titulo();
             } catch (Exception e){
-                System.out.println(e);
+                System.out.println("Errro:" + e);
             }
         }
 
         return arrayDeTitulos;
     }
 
-    //Retorna valores inteiros do json. Exemplo "Original_title":"nome do filme"
+    @Override
     public ArrayList<String> parseJson(Pattern padrao){
         Matcher matcher = padrao.matcher(this.json);
         ArrayList<String> valoresProcurados = new ArrayList<>();
         while (matcher.find()) {
             //Retorna os valores dentro dos parenteses.
-            if(matcher.group(0).contains("poster_path")){
-                valoresProcurados.add("https://image.tmdb.org/t/p/w600_and_h900_bestv2/".concat(matcher.group(1)));
-            } else {
+            if(matcher.group(0).contains("title")) {
                 valoresProcurados.add(matcher.group(1));
+            }else if(matcher.group(0).contains("path")) {
+                String[] link = matcher.group(1).split(":", 2);
+                valoresProcurados.add(link[1].substring(1,link[1].length()-1).concat(".jpg"));
+            } else if(matcher.group(0).contains("dates")) {
+                valoresProcurados.add(matcher.group(2).substring(0,10));
             }
 
             //Obs matcher.group(0) retornaria toda a string
@@ -73,4 +77,7 @@ public class Parser implements Parseable {
         }
         return valoresProcurados;
     }
+
+
+
 }
