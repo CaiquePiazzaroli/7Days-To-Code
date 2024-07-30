@@ -29,7 +29,7 @@ public class HTMLGenerator {
                         <link rel="stylesheet" href="/style.css">
                     </head>
                     <body>
-                        <h1 class="mainTitle">Top Rated movies</h1>
+                        <h1 class="mainTitle">Top Rated</h1>
                         <main class="containerMain">
                 """;
         writer.write(docHTML);
@@ -47,7 +47,6 @@ public class HTMLGenerator {
                 """;
         writer.write(docHTML);
     }
-
 
     public static void closeHtml(){
         writer.close();
@@ -67,7 +66,7 @@ public class HTMLGenerator {
                         Nota: %s <br>
                         Data de lançamento: %s
                     </div>
-                    """,listaFilmes.get(i).getTitulo().replace("\\u0026", "&"), listaFilmes.get(i).getUrlPoster(),listaFilmes.get(i).getNota(),listaFilmes.get(i).getDataLancamento()));
+                    """,listaFilmes.get(i).getTitle().replace("\\u0026", "&"), listaFilmes.get(i).getUrlPoster(),listaFilmes.get(i).getRating(),listaFilmes.get(i).getRelaseDate()));
             }
         }
 
@@ -81,7 +80,7 @@ public class HTMLGenerator {
                         Nota: %s <br>
                         Data de lançamento: %s
                     </div>
-                    """,listaFilmes.get(i).getTitulo().replace("\\u0026", "&"), listaFilmes.get(i).getUrlPoster(),listaFilmes.get(i).getNota(),listaFilmes.get(i).getDataLancamento()));
+                    """,listaFilmes.get(i).getTitle().replace("\\u0026", "&"), listaFilmes.get(i).getUrlPoster(),listaFilmes.get(i).getRating(),listaFilmes.get(i).getRelaseDate()));
             }
         }
 

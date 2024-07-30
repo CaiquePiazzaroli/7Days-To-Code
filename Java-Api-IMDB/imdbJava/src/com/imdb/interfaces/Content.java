@@ -7,6 +7,4 @@ public interface Content {
     String urlImage();
     String rating();
     String year();
-
-    int compareTo(Titulo t);
 }

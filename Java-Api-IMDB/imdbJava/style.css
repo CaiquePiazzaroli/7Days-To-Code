@@ -32,6 +32,7 @@
 .filme {
     width: 18%;
     text-align: center;
+    align-items: center;
     border: solid black;
     border-radius: 5px;
     margin: 0.4%;
@@ -46,6 +47,10 @@ div {
     font-family: "Roboto", sans-serif;
     font-weight: 300;
     font-style: italic;
+}
+
+.imagem {
+    width: 350px;
 }
 
 

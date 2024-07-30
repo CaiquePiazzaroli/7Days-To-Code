@@ -11,7 +11,7 @@ import java.net.http.HttpResponse;
 
 import static java.net.http.HttpRequest.newBuilder;
 
-public class MarvelApiClient implements ApiClient {
+public class ApiMarvelClient implements ApiClient {
 
 
     private String apiUrl;
@@ -21,7 +21,7 @@ public class MarvelApiClient implements ApiClient {
     private String json;
 
     // Marvel api connection
-    public MarvelApiClient(String apikey, String privateApiKey, String timeStamp, String url) throws URISyntaxException, IOException, InterruptedException {
+    public ApiMarvelClient(String apikey, String privateApiKey, String timeStamp, String url) throws URISyntaxException, IOException, InterruptedException {
 
         //The hash to authenticate
         String hashCode = HashMd5.getMd5(timeStamp + privateApiKey +  apikey);

@@ -9,7 +9,7 @@ import java.net.http.HttpResponse;
 
 import static java.net.http.HttpRequest.newBuilder;
 
-public class TmdbApiClient {
+public class ApiTmdbClient {
 
     private String apiUrl;
     private HttpClient client;
@@ -18,7 +18,7 @@ public class TmdbApiClient {
     private String json;
 
     //TBDB api connection
-    public TmdbApiClient(String token, String apiUrl) throws URISyntaxException, IOException, InterruptedException {
+    public ApiTmdbClient(String token, String apiUrl) throws URISyntaxException, IOException, InterruptedException {
 
         //Criando o cliente
         this.apiUrl = apiUrl;
